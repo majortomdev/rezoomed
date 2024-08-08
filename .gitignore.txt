@@ -1,5 +1,6 @@
 ./frontend/node_modules
-./backend/src/index.js
+./backend/node_modules
+
 
 
 ./docker-compose.yml

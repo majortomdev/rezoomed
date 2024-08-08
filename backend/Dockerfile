@@ -1,12 +1,13 @@
-# backend/Dockerfile
 FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install
+COPY package.json package-lock.json ./
+
+RUN npm install
 
 COPY . .
 
 EXPOSE 5000
-CMD ["node", "src/index.js"]
+
+CMD ["npm", "start"]
