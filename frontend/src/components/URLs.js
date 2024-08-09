@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
 
 const URLs = ({ onLogout }) => {
   const [urls, setUrls] = useState([]);
@@ -10,29 +11,33 @@ const URLs = ({ onLogout }) => {
   }, []);
 
   const fetchUrls = async () => {
-    const token = localStorage.getItem("token");
+      console.log("FFFFFFFFFFFFFFFFFFeeeettttt");
+    const accessToken = localStorage.getItem("accessToken");
+      console.log("sSsSsSsSsSsSsSsS:    "+accessToken);
+      //const decodedToken = jwtDecode(token);
+      //console.log(decodedToken);
     const response = await axios.get("http://localhost:5000/api/urls", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken') }`
+    }});
     setUrls(response.data);
   };
 
   const handleAddUrl = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("accessToken");
     await axios.post(
       "http://localhost:5000/api/urls",
       { url: newUrl },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${accessToken}` } }
     );
     setNewUrl("");
     fetchUrls();
   };
 
   const handleDeleteUrl = async (id) => {
-    const token = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("accessToken");
     await axios.delete(`http://localhost:5000/api/urls/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
     fetchUrls();
   };

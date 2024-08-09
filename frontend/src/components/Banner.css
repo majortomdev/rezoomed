@@ -1,0 +1,17 @@
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+  }
+  
+  .banner-logo {
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .banner-title {
+    font-size: 2rem;
+  }
