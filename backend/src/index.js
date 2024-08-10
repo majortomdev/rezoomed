@@ -88,7 +88,7 @@ app.post("/api/urls", authenticateToken, async (req, res) => {
   const { url, active } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO urls (userid, url, active) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO urls (userid, urlstring, active) VALUES ($1, $2, $3) RETURNING *",
       [req.user.id, url, active]
     );
     res.status(201).json(result.rows[0]);

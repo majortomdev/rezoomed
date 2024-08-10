@@ -1,4 +1,4 @@
-.login, .register {
+.login, .register, .add-urls {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,13 +6,15 @@
     margin-top: 50px;
   }
   
-  .login input, .register input {
+  .login input, .register input, .add-urls input {
     margin: 10px 0;
     padding: 10px;
     width: 300px;
+    vertical-align: middle;
   }
   
-  .login button, .register button {
+  .login button, .register button, .add-urls button {
+    vertical-align: middle;
     padding: 10px 20px;
     background-color: #61dafb;
     border: none;
@@ -20,3 +22,11 @@
     font-size: 1rem;
     cursor: pointer;
   }
+
+  .add-urls input[type="submit"]  {
+    border-radius: 10px;
+    border: none;
+    box-shadow: none;
+    font-family: inherit;
+    font-size: 50px!important;
+}

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "./Login.css";
 
 const Login = ({ onLogin }) => {
-  //const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,9 +16,9 @@ const Login = ({ onLogin }) => {
         password,
       });
       const { accessToken } = response.data;
-        console.log("accessToken/inlogin:   "+accessToken);
+      console.log("accessToken/inlogin:   " + accessToken);
       localStorage.setItem("accessToken", accessToken);
-      onLogin(accessToken);
+      onLogin(accessToken, username);
     } catch (error) {
       setError("Invalid email or password");
     }

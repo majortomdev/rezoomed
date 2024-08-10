@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+import "./URLs.css";
 
-const URLs = ({ onLogout }) => {
+const URLs = ({ username, onLogout }) => {
   const [urls, setUrls] = useState([]);
   const [newUrl, setNewUrl] = useState("");
 
@@ -11,14 +12,12 @@ const URLs = ({ onLogout }) => {
   }, []);
 
   const fetchUrls = async () => {
-      console.log("FFFFFFFFFFFFFFFFFFeeeettttt");
     const accessToken = localStorage.getItem("accessToken");
-      console.log("sSsSsSsSsSsSsSsS:    "+accessToken);
-      //const decodedToken = jwtDecode(token);
-      //console.log(decodedToken);
     const response = await axios.get("http://localhost:5000/api/urls", {
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken') }`
-    }});
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
     setUrls(response.data);
   };
 
@@ -44,25 +43,49 @@ const URLs = ({ onLogout }) => {
 
   return (
     <div>
-      <form onSubmit={handleAddUrl}>
-        <input
-          type="url"
-          value={newUrl}
-          onChange={(e) => setNewUrl(e.target.value)}
-          placeholder="Enter URL"
-          required
-        />
-        <button type="submit">Add URL</button>
-      </form>
-      <ul>
+      {username ? (
+        <h2>Hello {username}, here are your saved links:</h2>
+      ) : (
+        <h2>Here are your links</h2>
+      )}
+
+      {/* <h2>{username} Here are your saved links:</h2> */}
+
+      <ul className="url-list">
         {urls.map((url) => (
-          <li key={url.id}>
-            {url.urlstring}{" "}
-            <button onClick={() => handleDeleteUrl(url.id)}>Delete</button>
+          <li className="url-item" key={url.id}>
+            <a
+              href={url.urlstring}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="url-link"
+            >
+              {url.urlstring}
+              {/* {urlstring.short_urlstring} - {url.urlstring} */}
+            </a>
+
+            <button
+              className="delete-button"
+              onClick={() => handleDeleteUrl(url.id)}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
-      <button onClick={onLogout}>Logout</button>
+      <div className="add-urls">
+        <form onSubmit={handleAddUrl}>
+          <input
+            type="url"
+            value={newUrl}
+            onChange={(e) => setNewUrl(e.target.value)}
+            placeholder="Enter URL"
+            required
+          />
+          <button type="submit">Add URL</button>
+        </form>
+        <button onClick={onLogout}>Logout</button>
+      </div>
     </div>
   );
 };
