@@ -20,6 +20,7 @@ const pool = new Pool({
 
 const corsOptions = {
   origin: "http://localhost:3000",
+  methods: "GET,POST,PUT,DELETE",
   optionsSuccessStatus: 200,
 };
 
@@ -85,11 +86,11 @@ app.get("/api/urls", authenticateToken, async (req, res) => {
 });
 
 app.post("/api/urls", authenticateToken, async (req, res) => {
-  const { url, active } = req.body;
+  const { url, display, clipped } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO urls (userid, urlstring, active) VALUES ($1, $2, $3) RETURNING *",
-      [req.user.id, url, active]
+      "INSERT INTO urls (userid, urlstring, display, clipped) VALUES ($1, $2, $3, $4) RETURNING *",
+      [req.user.id, url, display, clipped]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

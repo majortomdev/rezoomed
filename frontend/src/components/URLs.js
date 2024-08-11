@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import "./URLs.css";
 
 const URLs = ({ username, onLogout }) => {
   const [urls, setUrls] = useState([]);
   const [newUrl, setNewUrl] = useState("");
-
   useEffect(() => {
     fetchUrls();
   }, []);
+
+  const displayPart = (str) => {
+    let start = str.indexOf("//") + 2;
+    let newString = str.substring(start);
+    let end = newString.indexOf("/") + start;
+    return "(" + str.substring(start, end) + ")";
+  };
 
   const fetchUrls = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -24,11 +29,22 @@ const URLs = ({ username, onLogout }) => {
   const handleAddUrl = async (e) => {
     e.preventDefault();
     const accessToken = localStorage.getItem("accessToken");
-    await axios.post(
-      "http://localhost:5000/api/urls",
-      { url: newUrl },
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-    );
+    const display = displayPart(newUrl);
+
+    if (newUrl.length > 35) {
+      await axios.post(
+        "http://localhost:5000/api/urls",
+        { url: newUrl, display: display, clipped: true },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+    } else {
+      await axios.post(
+        "http://localhost:5000/api/urls",
+        { url: newUrl },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+    }
+
     setNewUrl("");
     fetchUrls();
   };
@@ -49,8 +65,6 @@ const URLs = ({ username, onLogout }) => {
         <h2>Here are your links</h2>
       )}
 
-      {/* <h2>{username} Here are your saved links:</h2> */}
-
       <ul className="url-list">
         {urls.map((url) => (
           <li className="url-item" key={url.id}>
@@ -60,8 +74,7 @@ const URLs = ({ username, onLogout }) => {
               rel="noopener noreferrer"
               className="url-link"
             >
-              {url.urlstring}
-              {/* {urlstring.short_urlstring} - {url.urlstring} */}
+              {url.clipped ? "Origin:  " + url.display : url.urlstring}
             </a>
 
             <button
