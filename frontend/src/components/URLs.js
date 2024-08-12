@@ -9,11 +9,11 @@ const URLs = ({ username, onLogout }) => {
     fetchUrls();
   }, []);
 
-  const displayPart = (str) => {
+  const shortenUrl = (str) => {
     let start = str.indexOf("//") + 2;
     let newString = str.substring(start);
     let end = newString.indexOf("/") + start;
-    return "(" + str.substring(start, end) + ")";
+    return str.substring(start, end) + "/...";
   };
 
   const fetchUrls = async () => {
@@ -29,18 +29,24 @@ const URLs = ({ username, onLogout }) => {
   const handleAddUrl = async (e) => {
     e.preventDefault();
     const accessToken = localStorage.getItem("accessToken");
-    const display = displayPart(newUrl);
+    const abridgedUrl = shortenUrl(newUrl);
+    const displayUrl = newUrl.substring(newUrl.indexOf("/") + 2);
 
     if (newUrl.length > 35) {
       await axios.post(
         "http://localhost:5000/api/urls",
-        { url: newUrl, display: display, clipped: true },
+        {
+          url: newUrl,
+          abridgedurl: abridgedUrl,
+          displayurl: "",
+          clipped: true,
+        },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
     } else {
       await axios.post(
         "http://localhost:5000/api/urls",
-        { url: newUrl },
+        { url: newUrl, abridgedurl: "", displayurl: displayUrl },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
     }
@@ -74,7 +80,7 @@ const URLs = ({ username, onLogout }) => {
               rel="noopener noreferrer"
               className="url-link"
             >
-              {url.clipped ? "Origin:  " + url.display : url.urlstring}
+              {url.clipped ? url.abridgedurl : url.displayurl}
             </a>
 
             <button

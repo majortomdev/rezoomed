@@ -86,11 +86,11 @@ app.get("/api/urls", authenticateToken, async (req, res) => {
 });
 
 app.post("/api/urls", authenticateToken, async (req, res) => {
-  const { url, display, clipped } = req.body;
+  const { url, abridgedurl, displayurl, clipped } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO urls (userid, urlstring, display, clipped) VALUES ($1, $2, $3, $4) RETURNING *",
-      [req.user.id, url, display, clipped]
+      "INSERT INTO urls (userid, urlstring, abridgedurl, displayurl, clipped) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [req.user.id, url, abridgedurl, displayurl, clipped]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
