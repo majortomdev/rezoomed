@@ -16,7 +16,6 @@ const Login = ({ onLogin }) => {
         password,
       });
       const { accessToken } = response.data;
-      console.log("accessToken/inlogin:   " + accessToken);
       localStorage.setItem("accessToken", accessToken);
       onLogin(accessToken, username);
     } catch (error) {

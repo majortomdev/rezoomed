@@ -1,6 +1,7 @@
 .banner {
     display: flex;
     align-items: center;
+    font-family:Palatino Linotype;
     justify-content: center;
     background-color: #282c34;
     padding: 20px;
