@@ -12,7 +12,14 @@ const Navbar = () => {
         myData
       </NavLink> */}
 
-      <NavLink
+      <NavLink to="/urls" className="nav-link">
+        myURLs
+      </NavLink>
+      <NavLink to="/notes" className="nav-link">
+        myData
+      </NavLink>
+
+      {/* <NavLink
         to="/urls"
         className={(navData) => (navData.isActive ? "active" : "nav-link")}
       >
@@ -23,7 +30,7 @@ const Navbar = () => {
         className={(navData) => (navData.isActive ? "active" : "nav-link")}
       >
         myData
-      </NavLink>
+      </NavLink> */}
     </nav>
   );
 };

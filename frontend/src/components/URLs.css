@@ -1,23 +1,27 @@
 .url-list {
-    display: flex;
+    /* display: flex; */
+    /* grid-template-columns: repeat(3, 1fr); */
+    display:flex;
     flex-wrap: wrap;
     justify-content: space-between;
     list-style-type: none;
+    align-items: start;
     padding: 0;
     margin: 0;
     gap: 20px;
 }
 
 .url-item {
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  width: 30%; 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px;
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 10px;  
 }
 
 .url-item a {

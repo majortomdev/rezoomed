@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import axios from "axios";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,10 +6,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import Banner from "./components/Banner";
+import { jwtDecode } from "jwt-decode";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import URLs from "./components/URLs";
-import NoteTags from "./components/NoteTags";
+import DataTags from "./components/DataTags";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -21,6 +21,16 @@ const App = () => {
     //const username = localStorage.getItem("username");
     if (accessToken) {
       setIsAuthenticated(true);
+      const decodedToken = jwtDecode(accessToken);
+      const expirationTime = decodedToken.exp * 1000 - Date.now();
+
+      if (expirationTime <= 0) {
+        handleLogout();
+      } else {
+        setTimeout(() => {
+          handleLogout();
+        }, expirationTime);
+      }
     }
   }, []);
 
@@ -36,6 +46,12 @@ const App = () => {
     localStorage.removeItem("username");
     setIsAuthenticated(false);
     setUsername("");
+  };
+
+  const isTokenExpired = (token) => {
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    return decodedToken.exp < currentTime;
   };
 
   return (
@@ -68,7 +84,13 @@ const App = () => {
         />
         <Route
           path="/notes"
-          element={isAuthenticated ? <NoteTags /> : <Navigate to="/login" />}
+          element={
+            isAuthenticated ? (
+              <DataTags onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
