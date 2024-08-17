@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../axiosConfig";
+import axiosX from "../axiosConfig";
 import Navbar from "./Navbar";
 import "./URLs.css";
 
@@ -19,7 +19,7 @@ const URLs = ({ username, onLogout }) => {
 
   const fetchUrls = async () => {
     //const accessToken = localStorage.getItem("accessToken");
-    const response = await axios.get("http://localhost:5000/api/urls", {
+    const response = await axiosX.get("http://localhost:5000/api/urls", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -34,7 +34,7 @@ const URLs = ({ username, onLogout }) => {
     const displayUrl = newUrl.substring(newUrl.indexOf("/") + 2);
 
     if (newUrl.length > 35) {
-      await axios.post(
+      await axiosX.post(
         "http://localhost:5000/api/urls",
         {
           url: newUrl,
@@ -45,7 +45,7 @@ const URLs = ({ username, onLogout }) => {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
     } else {
-      await axios.post(
+      await axiosX.post(
         "http://localhost:5000/api/urls",
         { url: newUrl, abridgedurl: "", displayurl: displayUrl },
         { headers: { Authorization: `Bearer ${accessToken}` } }
@@ -58,7 +58,7 @@ const URLs = ({ username, onLogout }) => {
 
   const handleDeleteUrl = async (id) => {
     const accessToken = localStorage.getItem("accessToken");
-    await axios.delete(`http://localhost:5000/api/urls/${id}`, {
+    await axiosX.delete(`http://localhost:5000/api/urls/${id}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     fetchUrls();

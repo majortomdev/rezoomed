@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../axiosConfig";
+import axiosX from "../axiosConfig";
 import "./DataTags.css";
 import Navbar from "./Navbar";
 
@@ -10,7 +10,7 @@ const DataTags = ({ onLogout }) => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const response = await axios.get("http://localhost:5000/api/notes", {
+      const response = await axiosX.get("http://localhost:5000/api/notes", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -21,7 +21,7 @@ const DataTags = ({ onLogout }) => {
   }, []);
 
   const handleAddNote = async () => {
-    const response = await axios.post(
+    const response = await axiosX.post(
       "http://localhost:5000/api/notes",
       {
         title: newTitle,
