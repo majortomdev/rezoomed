@@ -25,11 +25,12 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-router.get("/notes", authenticateToken, async (req, res) => {
+router.get("/datatags", authenticateToken, async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM notes WHERE userid = $1", [
-      req.user.id,
-    ]);
+    const result = await pool.query(
+      "SELECT * FROM data_tags WHERE userid = $1",
+      [req.user.id]
+    );
     res.json(result.rows);
   } catch (err) {
     console.error("Server Error:", err);
@@ -37,17 +38,38 @@ router.get("/notes", authenticateToken, async (req, res) => {
   }
 });
 
-router.post("/notes", authenticateToken, async (req, res) => {
+router.post("/datatags", authenticateToken, async (req, res) => {
   const { title, entries } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO notes (userid, title, entries) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO data_tags (userid, title, entries) VALUES ($1, $2, $3) RETURNING *",
       [req.user.id, title, entries]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error("Server Error:", err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+uter.put("/datatags/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, entries } = req.body;
+
+  try {
+    const updateNote = await pool.query(
+      "UPDATE data_tags SET title = $1, entries = $2 WHERE id = $3 RETURNING *",
+      [title, entries, id]
+    );
+
+    if (updateNote.rows.length === 0) {
+      return res.status(404).json({ error: "Data tag not found" });
+    }
+
+    res.json(updateNote.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

@@ -8,14 +8,14 @@ const Navbar = () => {
       {/* <NavLink to="/urls" activeClassName="active" className="nav-link">
         myURLs
       </NavLink>
-      <NavLink to="/notes" activeClassName="active" className="nav-link">
+      <NavLink to="/datatags" activeClassName="active" className="nav-link">
         myData
       </NavLink> */}
 
       <NavLink to="/urls" className="nav-link">
         myURLs
       </NavLink>
-      <NavLink to="/notes" className="nav-link">
+      <NavLink to="/datatags" className="nav-link">
         myData
       </NavLink>
 
@@ -26,7 +26,7 @@ const Navbar = () => {
         myURLs
       </NavLink>
       <NavLink
-        to="/notes"
+        to="/datatags"
         className={(navData) => (navData.isActive ? "active" : "nav-link")}
       >
         myData

@@ -83,7 +83,7 @@ const App = () => {
           }
         />
         <Route
-          path="/notes"
+          path="/datatags"
           element={
             isAuthenticated ? (
               <DataTags onLogout={handleLogout} />

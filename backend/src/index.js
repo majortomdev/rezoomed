@@ -4,13 +4,13 @@ const jwt = require("jsonwebtoken");
 const { Pool } = require("pg");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
-const notesRouter = require("../routes/notes");
+const datatagsRouter = require("../routes/datatags");
 require("dotenv").config();
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/api", notesRouter);
+app.use("/api", datatagsRouter);
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -65,7 +65,7 @@ app.post("/api/login", async (req, res) => {
       const accessToken = jwt.sign(
         { id: user.id, username: user.username },
         process.env.JWT_SECRET,
-        { expiresIn: "1m" }
+        { expiresIn: "1h" }
       );
       //console.log("Generated Token:", accessToken);
       res.json({ accessToken });

@@ -1,10 +1,10 @@
-.notes-container {
+.datatags-container {
     display: flex; 
     flex-wrap: wrap;
     gap: 16px;
 }
 
-.note, .new-note {
+.datatag, .new-datatag {
     width: 20%;
     display: initial;
     border: 1px solid #ddd;
@@ -14,28 +14,29 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.note h3 {
+.datatag h3 {
     margin-top: 0;
     font-size: 1.2em;
     color: #333;
 }
 
-.new-note h3 {
+.new-datatag h3 {
     margin-top: 0;
 }
 
-.note ul {
+.datatag ul {
     list-style-type: disc;
     padding-left: 20px;
+    text-align: left;
 }
 
-.new-note input,
-.new-note textarea {
+.new-datatag input,
+.new-datatag textarea {
     width: 100%;
     margin-bottom: 8px;
 }
 
-.new-note button {
+.new-datatag button {
     display: block;
     /* width: 100%; */
     margin: auto;
@@ -46,12 +47,12 @@
     border-radius: 4px;
     cursor: pointer;
 }
-.new-note {
+.new-datatag {
     border: #333;
     background-color: #ecece7;
 }
 
-.new-note button:hover {
+.new-datatag button:hover {
     background-color: #ff9100;
 }
 
@@ -83,7 +84,7 @@ textarea {
     display: block;
 }
 
-.dataTags-container {
+.datatags-container {
     /* display: flex; */
     align-items: center;
     text-align: center;
