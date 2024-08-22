@@ -25,11 +25,12 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-router.get("/notes", authenticateToken, async (req, res) => {
+router.get("/datatags", authenticateToken, async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM notes WHERE userid = $1", [
-      req.user.id,
-    ]);
+    const result = await pool.query(
+      "SELECT * FROM data_tags WHERE userid = $1",
+      [req.user.id]
+    );
     res.json(result.rows);
   } catch (err) {
     console.error("Server Error:", err);
@@ -37,11 +38,11 @@ router.get("/notes", authenticateToken, async (req, res) => {
   }
 });
 
-router.post("/notes", authenticateToken, async (req, res) => {
+router.post("/datatags", authenticateToken, async (req, res) => {
   const { title, entries } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO notes (userid, title, entries) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO data_tags (userid, title, entries) VALUES ($1, $2, $3) RETURNING *",
       [req.user.id, title, entries]
     );
     res.status(201).json(result.rows[0]);
