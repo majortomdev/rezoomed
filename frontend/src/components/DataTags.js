@@ -10,7 +10,7 @@ const DataTags = ({ onLogout }) => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const response = await axiosX.get("http://localhost:5000/api/notes", {
+      const response = await axiosX.get("http://localhost:5000/api/datatags", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -22,7 +22,7 @@ const DataTags = ({ onLogout }) => {
 
   const handleAddNote = async () => {
     const response = await axiosX.post(
-      "http://localhost:5000/api/notes",
+      "http://localhost:5000/api/datatags",
       {
         title: newTitle,
         entries: newEntries.split("\n"),

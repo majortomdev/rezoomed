@@ -15,7 +15,7 @@ const Navbar = () => {
       <NavLink to="/urls" className="nav-link">
         myURLs
       </NavLink>
-      <NavLink to="/notes" className="nav-link">
+      <NavLink to="/datatags" className="nav-link">
         myData
       </NavLink>
 
