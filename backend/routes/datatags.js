@@ -52,7 +52,7 @@ router.post("/datatags", authenticateToken, async (req, res) => {
   }
 });
 
-uter.put("/datatags/:id", async (req, res) => {
+router.put("/datatags/:id", async (req, res) => {
   const { id } = req.params;
   const { title, entries } = req.body;
 
