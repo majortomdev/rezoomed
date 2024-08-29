@@ -24,9 +24,23 @@
     margin-top: 0;
 }
 
+.note {
+    position: relative;
+    border: 1px solid #ccc; /* Example styling */
+    border-radius: 8px; /* Example styling */
+    padding: 16px;
+    padding-bottom: 40px; /* Add padding to prevent overlap */
+    min-height: 200px; /* Ensure the div has enough height */
+}
 .note ul {
     list-style-type: disc;
     padding-left: 20px;
+}
+
+.note button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
 }
 
 .new-note input,
@@ -62,6 +76,8 @@ textarea {
 
 .data-list {
     word-wrap: break-word;
+    text-align: left;
+    flex-grow: 1;
 }
 
 .new-inputs  {

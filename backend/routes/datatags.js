@@ -57,16 +57,16 @@ router.put("/datatags/:id", async (req, res) => {
   const { title, entries } = req.body;
 
   try {
-    const updateNote = await pool.query(
+    const updateTag = await pool.query(
       "UPDATE data_tags SET title = $1, entries = $2 WHERE id = $3 RETURNING *",
       [title, entries, id]
     );
 
-    if (updateNote.rows.length === 0) {
+    if (updateTag.rows.length === 0) {
       return res.status(404).json({ error: "Data tag not found" });
     }
 
-    res.json(updateNote.rows[0]);
+    res.json(updateTag.rows[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Server error" });
